@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,14 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const { toast } = useToast();
+
+  useEffect(() => {
+    const sessionExpired = localStorage.getItem("session_expired");
+    if (sessionExpired) {
+      localStorage.removeItem("session_expired");
+      toast("Sesi Anda telah berakhir. Silakan login kembali.", "error");
+    }
+  }, [toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

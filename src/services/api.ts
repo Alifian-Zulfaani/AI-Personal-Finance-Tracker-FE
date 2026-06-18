@@ -24,13 +24,16 @@ api.interceptors.request.use(
 );
 
 // Response interceptor - handle 401 errors
+let isRedirecting = false;
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      if (typeof window !== "undefined") {
+      if (typeof window !== "undefined" && !isRedirecting) {
+        isRedirecting = true;
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        localStorage.setItem("session_expired", "true");
         window.location.href = "/login";
       }
     }
