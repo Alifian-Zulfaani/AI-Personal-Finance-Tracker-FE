@@ -15,6 +15,13 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -27,6 +34,7 @@ export function Sidebar() {
   const { user, logout } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   return (
     <>
@@ -110,7 +118,7 @@ export function Sidebar() {
             </div>
           )}
           <button
-            onClick={logout}
+            onClick={() => setShowLogoutConfirm(true)}
             className={cn(
               "flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-all duration-200",
               collapsed && "justify-center px-0"
@@ -131,6 +139,32 @@ export function Sidebar() {
           <ChevronLeft className={cn("h-3 w-3 transition-transform", collapsed && "rotate-180")} />
         </button>
       </aside>
+
+      {/* Logout Confirmation Dialog */}
+      <Dialog
+        open={showLogoutConfirm}
+        onOpenChange={setShowLogoutConfirm}
+      >
+        <DialogContent onClose={() => setShowLogoutConfirm(false)} className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Konfirmasi Keluar</DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground mt-2">
+            Apakah Anda yakin ingin keluar dari akun ini?
+          </p>
+          <div className="flex gap-3 mt-6 justify-end">
+            <Button
+              variant="outline"
+              onClick={() => setShowLogoutConfirm(false)}
+            >
+              Batal
+            </Button>
+            <Button variant="destructive" onClick={logout}>
+              Ya, Keluar
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
