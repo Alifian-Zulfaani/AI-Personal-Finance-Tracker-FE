@@ -18,12 +18,12 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         {...props}
       >
         {placeholder && (
-          <option value="" disabled>
+          <option value="" disabled className="bg-background text-foreground">
             {placeholder}
           </option>
         )}
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option key={option.value} value={option.value} className="bg-background text-foreground">
             {option.label}
           </option>
         ))}

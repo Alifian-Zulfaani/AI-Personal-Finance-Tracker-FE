@@ -538,16 +538,16 @@ export default function TransactionsPage() {
               <Label htmlFor="amount">Jumlah (Rp)</Label>
               <Input
                 id="amount"
-                type="number"
+                type="text"
                 placeholder="0"
-                min="1"
-                value={formData.amount || ""}
-                onChange={(e) =>
+                value={formData.amount ? formData.amount.toLocaleString("id-ID") : ""}
+                onChange={(e) => {
+                  const rawValue = e.target.value.replace(/[^0-9]/g, "");
                   setFormData((p) => ({
                     ...p,
-                    amount: parseFloat(e.target.value) || 0,
-                  }))
-                }
+                    amount: rawValue ? parseFloat(rawValue) : 0,
+                  }));
+                }}
                 required
               />
             </div>
@@ -562,6 +562,7 @@ export default function TransactionsPage() {
                 onChange={(e) =>
                   setFormData((p) => ({ ...p, date: e.target.value }))
                 }
+                className="block w-full min-w-full pr-3 dark:[color-scheme:dark] [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-60 hover:[&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:transition-opacity"
               />
             </div>
 

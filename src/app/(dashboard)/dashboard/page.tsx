@@ -114,7 +114,7 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="animate-fade-in">
         <h1 className="text-2xl font-bold tracking-tight">
-          {getGreeting()}, {user?.name?.split(" ")[0]} 👋
+          {getGreeting()}, {user?.name?.split(" ")[0]}!
         </h1>
         <p className="text-muted-foreground mt-1">
           Berikut ringkasan keuangan Anda bulan ini.
@@ -177,7 +177,7 @@ export default function DashboardPage() {
         {/* Area Chart */}
         <Card className="glass-card lg:col-span-2 animate-fade-in animate-delay-300">
           <CardHeader>
-            <CardTitle className="text-base">Tren Keuangan 6 Bulan Terakhir</CardTitle>
+            <CardTitle className="text-base">Grafik Keuangan 6 Bulan Terakhir</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-72">
